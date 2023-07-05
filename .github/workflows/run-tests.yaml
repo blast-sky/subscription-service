@@ -27,12 +27,5 @@ jobs:
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
-          name: test.html
-          path: build/reports/tests/test/index.html
-
-      - name: Upload integrationTest results
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: integrationTest.html
-          path: build/reports/tests/integrationTest/index.html
+          name: reports
+          path: build/reports/tests
