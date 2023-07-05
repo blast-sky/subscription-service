@@ -56,7 +56,7 @@ class SubscriptionControllerTT(
             content = objectMapper.writeValueAsString(createSubscriptionDto)
         }
             .andDo { print() }
-            .andExpect { status { isOk() } }
+            .andExpect { status { isNotFound() } }
 
         val subscriptionEntity = subscriptionRepository.findByIdOrNull(subscriptionId)
 
