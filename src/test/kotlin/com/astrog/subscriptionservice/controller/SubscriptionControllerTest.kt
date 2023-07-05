@@ -26,15 +26,6 @@ class SubscriptionControllerTest(
     private val objectMapper: ObjectMapper,
 ) {
 
-//    @TestConfiguration
-//    class PathVariableBinder : WebMvcConfigurer {
-//
-//        override fun addFormatters(registry: FormatterRegistry) {
-//            registry.addConverter(StringToSubscriptionTypeConverter())
-//        }
-//    }
-
-
     @MockkBean
     private lateinit var subscriptionService: SubscriptionService
 
