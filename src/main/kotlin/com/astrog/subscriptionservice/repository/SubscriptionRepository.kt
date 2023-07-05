@@ -3,9 +3,16 @@ package com.astrog.subscriptionservice.repository
 import com.astrog.subscriptionservice.model.entity.SubscriptionEntity
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
+import org.springframework.stereotype.Repository
 
+@Repository
 interface SubscriptionRepository : CrudRepository<SubscriptionEntity, String> {
 
-    @Query("SELECT * FROM subscription sub JOIN filter ON sub.id = filter.subscription_id AND :title CONTAINS filter.string")
-    fun findSatisfiedSubscriptionsByFilters(title: String): Set<SubscriptionEntity>
+    // native SQL - "SELECT sub.id, sub.subscription_type FROM subscription sub JOIN filter ON sub.id = filter.subscription_id AND LOWER(:title) LIKE '%' || filter.string || '%'"
+    // JPQL - "SELECT sub FROM SubscriptionEntity sub, FilterEntity filter WHERE sub = filter.subscription AND LOWER(:title) LIKE '%' || filter.string || '%'"
+    @Query(
+        "SELECT sub.id, sub.subscription_type FROM subscription sub JOIN filter ON sub.id = filter.subscription_id AND LOWER(:title) LIKE '%' || filter.string || '%'",
+        nativeQuery = true,
+    )
+    fun findSatisfiedSubscriptionsByFilters(title: String): List<SubscriptionEntity>
 }

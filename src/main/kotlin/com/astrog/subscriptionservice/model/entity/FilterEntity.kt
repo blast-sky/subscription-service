@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Index
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 
 @Entity
@@ -18,4 +20,8 @@ data class FilterEntity(
 
     @Column(nullable = false)
     val string: String,
+
+    @ManyToOne
+    @JoinColumn(name = "subscription_id", nullable = false)
+    val subscription: SubscriptionEntity,
 )

@@ -10,6 +10,6 @@ enum class SubscriptionType {
     @JsonProperty("sms")
     SMS,
 
-    @JsonProperty("sms")
+    @JsonProperty("email")
     EMAIL,
 }
