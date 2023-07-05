@@ -76,7 +76,7 @@ class SubscriptionControllerTT(
 
         @Container
         @JvmStatic
-        val postgresContainer: PostgreSQLContainer<*> = PostgreSQLContainer("postgres:11.1")
+        val postgresContainer: PostgreSQLContainer<*> = PostgreSQLContainer("postgres:15.3")
             .withDatabaseName("integration-tests-db")
             .withUsername("db")
             .withPassword("db")
