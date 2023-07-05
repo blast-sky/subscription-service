@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+	id("org.unbroken-dome.test-sets") version "4.0.0"
 	id("org.springframework.boot") version "3.1.1"
 	id("io.spring.dependency-management") version "1.1.0"
 	kotlin("kapt") version "1.8.22"
@@ -26,6 +27,19 @@ repositories {
 	mavenCentral()
 }
 
+tasks.bootJar {
+	archiveFileName.set("app.jar")
+}
+
+
+testSets {
+	create("integrationTest")
+}
+
+val integrationTestImplementation: Configuration by configurations.getting {
+	extendsFrom(configurations.implementation.get())
+}
+
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -47,6 +61,15 @@ dependencies {
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.amqp:spring-rabbit-test")
+	testImplementation("com.ninja-squad:springmockk:3.0.1")
+
+	integrationTestImplementation("org.junit.jupiter:junit-jupiter")
+	integrationTestImplementation("org.springframework.boot:spring-boot-starter-test") {
+		exclude(group = "org.mockito", module = "mockito-core")
+	}
+	integrationTestImplementation("org.springframework.amqp:spring-rabbit-test")
+	integrationTestImplementation("com.ninja-squad:springmockk:3.0.1")
+	integrationTestImplementation("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {
