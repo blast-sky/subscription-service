@@ -27,7 +27,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Testcontainers(disabledWithoutDocker = true)
+@Testcontainers
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 class SubscriptionControllerTT(
     private val mockMvc: MockMvc,
