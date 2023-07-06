@@ -27,6 +27,10 @@ repositories {
 	mavenCentral()
 }
 
+springBoot {
+	buildInfo()
+}
+
 tasks.bootJar {
 	archiveFileName.set("app.jar")
 }
@@ -69,7 +73,7 @@ dependencies {
 	}
 	integrationTestImplementation("org.springframework.amqp:spring-rabbit-test")
 	integrationTestImplementation("com.ninja-squad:springmockk:3.0.1")
-	// integrationTestImplementation("com.h2database:h2")
+	integrationTestImplementation("com.h2database:h2")
 	integrationTestImplementation("org.springframework.boot:spring-boot-testcontainers")
 	integrationTestImplementation("org.testcontainers:junit-jupiter")
 	integrationTestImplementation("org.testcontainers:postgresql")
