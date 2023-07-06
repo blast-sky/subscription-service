@@ -1,10 +1,10 @@
-package com.astrog.subscriptionservice.controller
+package com.astrog.subscriptionservice.manager.controller
 
-import com.astrog.subscriptionservice.model.domain.SubscriptionType
-import com.astrog.subscriptionservice.model.entity.FilterEntity
+import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
+import com.astrog.subscriptionservice.manager.model.entity.FilterEntity
 import com.astrog.subscriptionservice.randomCreateSubscriptionDto
-import com.astrog.subscriptionservice.repository.SubscriptionRepository
-import com.astrog.subscriptionservice.service.SubscriptionService
+import com.astrog.subscriptionservice.manager.repository.SubscriptionRepository
+import com.astrog.subscriptionservice.manager.service.SubscriptionService
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse

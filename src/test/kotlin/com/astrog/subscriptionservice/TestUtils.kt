@@ -1,8 +1,8 @@
 package com.astrog.subscriptionservice
 
-import com.astrog.subscriptionservice.model.domain.SubscriptionType
-import com.astrog.subscriptionservice.model.dto.CreateSubscriptionDto
-import com.astrog.subscriptionservice.model.dto.RemoveSubscriptionDto
+import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
+import com.astrog.subscriptionservice.manager.model.dto.CreateSubscriptionDto
+import com.astrog.subscriptionservice.manager.model.dto.RemoveSubscriptionDto
 import java.util.UUID
 
 val randomString: String

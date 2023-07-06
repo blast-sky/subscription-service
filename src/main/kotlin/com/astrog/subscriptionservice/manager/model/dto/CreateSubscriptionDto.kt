@@ -1,6 +1,6 @@
-package com.astrog.subscriptionservice.model.dto
+package com.astrog.subscriptionservice.manager.model.dto
 
-import com.astrog.subscriptionservice.model.domain.SubscriptionType
+import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
 import jakarta.validation.constraints.NotBlank
 
 data class CreateSubscriptionDto(

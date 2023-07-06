@@ -1,7 +1,7 @@
-package com.astrog.subscriptionservice.configuration
+package com.astrog.subscriptionservice.manager.configuration
 
-import com.astrog.subscriptionservice.model.domain.SubscriptionType
-import com.astrog.subscriptionservice.model.exception.UnsupportedSubscriptionTypeException
+import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
+import com.astrog.subscriptionservice.manager.model.exception.UnsupportedSubscriptionTypeException
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.springframework.core.convert.converter.Converter
 

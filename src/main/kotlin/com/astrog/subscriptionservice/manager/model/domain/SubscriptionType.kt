@@ -1,4 +1,4 @@
-package com.astrog.subscriptionservice.model.domain
+package com.astrog.subscriptionservice.manager.model.domain
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

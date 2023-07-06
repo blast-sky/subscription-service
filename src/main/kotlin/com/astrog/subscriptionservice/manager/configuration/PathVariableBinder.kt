@@ -1,4 +1,4 @@
-package com.astrog.subscriptionservice.configuration
+package com.astrog.subscriptionservice.manager.configuration
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.format.FormatterRegistry

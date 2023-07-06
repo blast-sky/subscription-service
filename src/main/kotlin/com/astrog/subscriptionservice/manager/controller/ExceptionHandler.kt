@@ -1,7 +1,7 @@
-package com.astrog.subscriptionservice.controller
+package com.astrog.subscriptionservice.manager.controller
 
-import com.astrog.subscriptionservice.model.exception.SubscriptionAlreadyExistException
-import com.astrog.subscriptionservice.model.exception.UnsupportedSubscriptionTypeException
+import com.astrog.subscriptionservice.manager.model.exception.SubscriptionAlreadyExistException
+import com.astrog.subscriptionservice.manager.model.exception.UnsupportedSubscriptionTypeException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException

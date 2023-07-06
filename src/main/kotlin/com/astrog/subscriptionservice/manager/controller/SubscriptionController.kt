@@ -1,8 +1,8 @@
-package com.astrog.subscriptionservice.controller
+package com.astrog.subscriptionservice.manager.controller
 
-import com.astrog.subscriptionservice.model.domain.SubscriptionType
-import com.astrog.subscriptionservice.model.dto.CreateSubscriptionDto
-import com.astrog.subscriptionservice.service.SubscriptionService
+import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
+import com.astrog.subscriptionservice.manager.model.dto.CreateSubscriptionDto
+import com.astrog.subscriptionservice.manager.service.SubscriptionService
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.constraints.NotBlank
 import org.springframework.validation.annotation.Validated

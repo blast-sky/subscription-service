@@ -1,10 +1,10 @@
-package com.astrog.subscriptionservice.service
+package com.astrog.subscriptionservice.manager.service
 
-import com.astrog.subscriptionservice.model.domain.SubscriptionType
-import com.astrog.subscriptionservice.model.entity.FilterEntity
-import com.astrog.subscriptionservice.model.entity.SubscriptionEntity
-import com.astrog.subscriptionservice.model.exception.SubscriptionAlreadyExistException
-import com.astrog.subscriptionservice.repository.SubscriptionRepository
+import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
+import com.astrog.subscriptionservice.manager.model.entity.FilterEntity
+import com.astrog.subscriptionservice.manager.model.entity.SubscriptionEntity
+import com.astrog.subscriptionservice.manager.model.exception.SubscriptionAlreadyExistException
+import com.astrog.subscriptionservice.manager.repository.SubscriptionRepository
 import jakarta.transaction.Transactional
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.stereotype.Service

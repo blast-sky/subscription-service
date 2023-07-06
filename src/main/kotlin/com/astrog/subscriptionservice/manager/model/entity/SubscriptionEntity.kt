@@ -1,6 +1,6 @@
-package com.astrog.subscriptionservice.model.entity
+package com.astrog.subscriptionservice.manager.model.entity
 
-import com.astrog.subscriptionservice.model.domain.SubscriptionType
+import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

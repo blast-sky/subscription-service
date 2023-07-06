@@ -1,6 +1,6 @@
-package com.astrog.subscriptionservice.repository
+package com.astrog.subscriptionservice.manager.repository
 
-import com.astrog.subscriptionservice.model.entity.SubscriptionEntity
+import com.astrog.subscriptionservice.manager.model.entity.SubscriptionEntity
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository

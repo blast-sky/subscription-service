@@ -1,7 +1,8 @@
-package com.astrog.subscriptionservice.configuration
+package com.astrog.subscriptionservice.manager.configuration
 
-import com.astrog.subscriptionservice.model.domain.SubscriptionType
-import com.astrog.subscriptionservice.model.exception.UnsupportedSubscriptionTypeException
+import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
+import com.astrog.subscriptionservice.manager.model.exception.UnsupportedSubscriptionTypeException
+import com.astrog.subscriptionservice.manager.configuration.StringToSubscriptionTypeConverter
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
