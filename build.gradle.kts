@@ -45,6 +45,8 @@ val integrationTestImplementation: Configuration by configurations.getting {
 }
 
 dependencies {
+	val springMockkVersion = "3.0.1"
+
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -65,18 +67,20 @@ dependencies {
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.amqp:spring-rabbit-test")
-	testImplementation("com.ninja-squad:springmockk:3.0.1")
+	testImplementation("com.ninja-squad:springmockk:$springMockkVersion")
 
 	integrationTestImplementation("org.junit.jupiter:junit-jupiter")
 	integrationTestImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.mockito", module = "mockito-core")
 	}
+	integrationTestImplementation("com.ninja-squad:springmockk:$springMockkVersion")
 	integrationTestImplementation("org.springframework.amqp:spring-rabbit-test")
-	integrationTestImplementation("com.ninja-squad:springmockk:3.0.1")
 	integrationTestImplementation("com.h2database:h2")
-	integrationTestImplementation("org.springframework.boot:spring-boot-testcontainers")
+
 	integrationTestImplementation("org.testcontainers:junit-jupiter")
+	integrationTestImplementation("org.springframework.boot:spring-boot-testcontainers")
 	integrationTestImplementation("org.testcontainers:postgresql")
+	integrationTestImplementation("org.testcontainers:rabbitmq")
 }
 
 tasks.withType<KotlinCompile> {
