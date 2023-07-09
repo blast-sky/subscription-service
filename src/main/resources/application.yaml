@@ -4,6 +4,12 @@ spring:
     username: ${BD_USERNAME}
     password: ${BD_PASSWORD}
 
+  rabbitmq:
+    host: ${RABBIT_HOST:localhost}
+    password: ${RABBIT_PASSWORD:guest}
+    username: ${RABBIT_USERNAME:guest}
+
+
   jpa:
     show-sql: true
     hibernate:
