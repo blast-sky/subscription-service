@@ -2,9 +2,9 @@ package com.astrog.subscriptionservice.manager.controller
 
 import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
 import com.astrog.subscriptionservice.manager.model.entity.FilterEntity
-import com.astrog.subscriptionservice.randomCreateSubscriptionDto
+import com.astrog.subscriptionservice.manager.model.entity.SubscriptionId
 import com.astrog.subscriptionservice.manager.repository.SubscriptionRepository
-import com.astrog.subscriptionservice.manager.service.SubscriptionService
+import com.astrog.subscriptionservice.randomCreateSubscriptionDto
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -18,7 +18,9 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.springframework.test.context.TestConstructor
+import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.post
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
@@ -29,6 +31,13 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @AutoConfigureMockMvc
 @Testcontainers
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+@Sql(
+    statements = [
+        "DELETE FROM filter",
+        "DELETE FROM subscription",
+    ],
+    executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD,
+)
 class SubscriptionControllerTT(
     private val mockMvc: MockMvc,
     private val objectMapper: ObjectMapper,
@@ -43,8 +52,8 @@ class SubscriptionControllerTT(
                 filters = setOf("asd", "fgh", "jkl"),
             )
 
-        val subscriptionId = SubscriptionService.createSubscriptionId(
-            userId = createSubscriptionDto.userId,
+        val subscriptionId = SubscriptionId(
+            id = createSubscriptionDto.userId,
             subscriptionType = createSubscriptionDto.subscriptionType,
         )
 
@@ -68,8 +77,38 @@ class SubscriptionControllerTT(
         assertTrue(subscriptionEntity.filters.map(FilterEntity::string).containsAll(createSubscriptionDto.filters))
         assertTrue(
             subscriptionRepository.findSatisfiedSubscriptionsByFilters("asdf123asdffasdf")
-                .any { entity -> subscriptionEntity.id == entity.id }
+                .contains(subscriptionEntity)
         )
+    }
+
+    @Test
+    fun `subscriptions-remove Must remove subscription created with subscription-create When data is valid`() {
+        assertEquals(0, subscriptionRepository.count())
+
+        val createSubscriptionDto = randomCreateSubscriptionDto
+            .copy(
+                subscriptionType = SubscriptionType.TELEGRAM,
+                filters = setOf("asd", "fgh", "jkl"),
+            )
+
+        val subscriptionId = SubscriptionId(
+            id = createSubscriptionDto.userId,
+            subscriptionType = createSubscriptionDto.subscriptionType,
+        )
+
+        mockMvc.post("/subscriptions/create") {
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(createSubscriptionDto)
+        }
+            .andDo { print() }
+            .andExpect { status { isOk() } }
+
+        mockMvc.delete("/subscriptions/${createSubscriptionDto.userId}/telegram")
+            .andDo { print() }
+            .andExpect { status { isOk() } }
+
+        assertFalse(subscriptionRepository.existsById(subscriptionId))
+        assertTrue(subscriptionRepository.findSatisfiedSubscriptionsByFilters("asdf123asdffasdf").isEmpty())
     }
 
     companion object {

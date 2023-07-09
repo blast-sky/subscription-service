@@ -1,27 +1,33 @@
 package com.astrog.subscriptionservice.manager.model.entity
 
 import jakarta.persistence.Column
+import jakarta.persistence.ConstraintMode
 import jakarta.persistence.Entity
+import jakarta.persistence.ForeignKey
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Index
 import jakarta.persistence.JoinColumn
+import jakarta.persistence.JoinColumns
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
 
 @Entity
 @Table(name = "filter", indexes = [Index(columnList = "string")])
-data class FilterEntity(
+class FilterEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    override val id: Long? = null,
 
     @Column(nullable = false)
     val string: String,
 
     @ManyToOne
-    @JoinColumn(name = "subscription_id", nullable = false)
+    @JoinColumns(
+        JoinColumn(name = "subscription_id", nullable = false),
+        JoinColumn(name = "subscription_type", nullable = false),
+    )
     val subscription: SubscriptionEntity,
-)
+) : BaseEntity<Long?>()

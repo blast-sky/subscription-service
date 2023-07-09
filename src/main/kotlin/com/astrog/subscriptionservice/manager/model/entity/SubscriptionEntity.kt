@@ -8,6 +8,7 @@ import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.FetchType
 import jakarta.persistence.Id
+import jakarta.persistence.IdClass
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import jakarta.persistence.UniqueConstraint
@@ -19,13 +20,15 @@ import jakarta.persistence.UniqueConstraint
         UniqueConstraint(columnNames = ["subscription_type", "id"]),
     ],
 )
+@IdClass(SubscriptionId::class)
 data class SubscriptionEntity(
 
     @Id
     val id: String,
 
-    @Column(name = "subscription_type", nullable = false)
+    @Id
     @Enumerated(EnumType.STRING)
+    @Column(name = "subscription_type")
     val subscriptionType: SubscriptionType,
 
     @OneToMany(
@@ -35,4 +38,17 @@ data class SubscriptionEntity(
         mappedBy = "subscription",
     )
     val filters: MutableList<FilterEntity>,
-)
+) {
+
+    override fun hashCode(): Int {
+        return 42
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other == null || other !is SubscriptionEntity) {
+            return false
+        }
+
+        return id == other.id && subscriptionType == other.subscriptionType
+    }
+}

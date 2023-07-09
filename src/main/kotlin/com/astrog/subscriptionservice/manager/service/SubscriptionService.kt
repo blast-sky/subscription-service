@@ -3,6 +3,7 @@ package com.astrog.subscriptionservice.manager.service
 import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
 import com.astrog.subscriptionservice.manager.model.entity.FilterEntity
 import com.astrog.subscriptionservice.manager.model.entity.SubscriptionEntity
+import com.astrog.subscriptionservice.manager.model.entity.SubscriptionId
 import com.astrog.subscriptionservice.manager.model.exception.SubscriptionAlreadyExistException
 import com.astrog.subscriptionservice.manager.repository.SubscriptionRepository
 import jakarta.transaction.Transactional
@@ -16,9 +17,8 @@ class SubscriptionService(
 
     @Transactional
     fun createSubscription(userId: String, subscriptionType: SubscriptionType, filters: Set<String>) {
-        val subscriptionId = createSubscriptionId(userId, subscriptionType)
         val subscriptionEntity = SubscriptionEntity(
-            id = subscriptionId,
+            id = userId,
             subscriptionType = subscriptionType,
             filters = mutableListOf(),
         )
@@ -38,17 +38,6 @@ class SubscriptionService(
 
     @Transactional
     fun removeSubscription(userId: String, subscriptionType: SubscriptionType) {
-        val subscriptionId = createSubscriptionId(userId, subscriptionType)
-        subscriptionRepository.deleteById(subscriptionId)
-    }
-
-    companion object {
-
-        fun createSubscriptionId(userId: String, subscriptionType: SubscriptionType): String {
-            if (subscriptionType == SubscriptionType.TELEGRAM) {
-                return "$userId:$subscriptionType"
-            }
-            error("Not implemented yet")
-        }
+        subscriptionRepository.deleteById(SubscriptionId(userId, subscriptionType))
     }
 }
