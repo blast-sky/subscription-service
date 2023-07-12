@@ -185,11 +185,11 @@ class SubscriptionControllerTest(
         }
 
         @Test
-        fun `remove Must return NOT_FOUND When request body is not valid`() {
-            mockMvc.delete("/subscriptions//sms")
+        fun `remove Must return BAD_REQUEST When request is not valid`() {
+            mockMvc.delete("/subscriptions/123/sm")
                 .andDo { print() }
                 .andExpectAll {
-                    status { isNotFound() }
+                    status { isBadRequest() }
                 }
 
             verify(exactly = 0) {
