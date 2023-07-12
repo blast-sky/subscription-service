@@ -1,14 +1,17 @@
 package com.astrog.subscriptionservice.manager.service
 
 import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
+import com.astrog.subscriptionservice.manager.model.dto.SubscriptionDto
 import com.astrog.subscriptionservice.manager.model.entity.FilterEntity
 import com.astrog.subscriptionservice.manager.model.entity.SubscriptionEntity
 import com.astrog.subscriptionservice.manager.model.entity.SubscriptionId
 import com.astrog.subscriptionservice.manager.model.exception.SubscriptionAlreadyExistException
 import com.astrog.subscriptionservice.manager.repository.SubscriptionRepository
-import jakarta.transaction.Transactional
+
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.dao.DuplicateKeyException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class SubscriptionService(
@@ -18,7 +21,7 @@ class SubscriptionService(
     @Transactional
     fun createSubscription(userId: String, subscriptionType: SubscriptionType, filters: Set<String>) {
         val subscriptionEntity = SubscriptionEntity(
-            id = userId,
+            userId = userId,
             subscriptionType = subscriptionType,
             filters = mutableListOf(),
         )
@@ -31,7 +34,7 @@ class SubscriptionService(
 
         try {
             subscriptionRepository.save(subscriptionEntity)
-        } catch (ex: DataIntegrityViolationException) {
+        } catch (ex: DuplicateKeyException) {
             throw SubscriptionAlreadyExistException(userId, subscriptionType)
         }
     }
@@ -39,5 +42,18 @@ class SubscriptionService(
     @Transactional
     fun removeSubscription(userId: String, subscriptionType: SubscriptionType) {
         subscriptionRepository.deleteById(SubscriptionId(userId, subscriptionType))
+    }
+
+    @Transactional(readOnly = true)
+    fun getSubscriptionsByUserId(userId: String): List<SubscriptionDto> {
+        return subscriptionRepository.findAllByUserId(userId)
+            .map {
+                SubscriptionDto(
+                    it.userId,
+                    it.subscriptionType,
+                    it.filters.map(FilterEntity::string).toSet(),
+                    it.createdAt
+                )
+            }
     }
 }

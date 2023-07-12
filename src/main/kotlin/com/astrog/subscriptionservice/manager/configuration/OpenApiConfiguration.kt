@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration
 class OpenApiConfiguration {
 
     @Bean
-    fun apiDocConfig(buildProperties: BuildProperties): OpenAPI{
+    fun apiDocConfig(buildProperties: BuildProperties): OpenAPI {
         return OpenAPI().apply {
             info = Info().apply {
                 title = "Subscription Service"

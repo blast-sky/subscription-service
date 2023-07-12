@@ -12,19 +12,23 @@ import jakarta.persistence.IdClass
 import jakarta.persistence.OneToMany
 import jakarta.persistence.Table
 import jakarta.persistence.UniqueConstraint
+import org.springframework.data.annotation.CreatedDate
+import java.time.LocalDateTime
+import java.time.OffsetDateTime
 
 @Entity
 @Table(
     name = "subscription",
     uniqueConstraints = [
-        UniqueConstraint(columnNames = ["subscription_type", "id"]),
+        UniqueConstraint(columnNames = ["subscription_type", "user_id"]),
     ],
 )
 @IdClass(SubscriptionId::class)
 data class SubscriptionEntity(
 
     @Id
-    val id: String,
+    @Column(name = "user_id")
+    val userId: String,
 
     @Id
     @Enumerated(EnumType.STRING)
@@ -38,6 +42,10 @@ data class SubscriptionEntity(
         mappedBy = "subscription",
     )
     val filters: MutableList<FilterEntity>,
+
+    @CreatedDate
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    val createdAt: OffsetDateTime = OffsetDateTime.now(),
 ) {
 
     override fun hashCode(): Int {
@@ -49,6 +57,6 @@ data class SubscriptionEntity(
             return false
         }
 
-        return id == other.id && subscriptionType == other.subscriptionType
+        return userId == other.userId && subscriptionType == other.subscriptionType
     }
 }

@@ -1,6 +1,7 @@
 package com.astrog.subscriptionservice.manager.controller
 
 import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
+import com.astrog.subscriptionservice.manager.model.dto.SubscriptionDto
 import com.astrog.subscriptionservice.manager.model.entity.FilterEntity
 import com.astrog.subscriptionservice.manager.model.entity.SubscriptionId
 import com.astrog.subscriptionservice.manager.repository.SubscriptionRepository
@@ -21,6 +22,7 @@ import org.springframework.test.context.TestConstructor
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.delete
+import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
@@ -53,7 +55,7 @@ class SubscriptionControllerTT(
             )
 
         val subscriptionId = SubscriptionId(
-            id = createSubscriptionDto.userId,
+            userId = createSubscriptionDto.userId,
             subscriptionType = createSubscriptionDto.subscriptionType,
         )
 
@@ -92,7 +94,7 @@ class SubscriptionControllerTT(
             )
 
         val subscriptionId = SubscriptionId(
-            id = createSubscriptionDto.userId,
+            userId = createSubscriptionDto.userId,
             subscriptionType = createSubscriptionDto.subscriptionType,
         )
 
@@ -109,6 +111,49 @@ class SubscriptionControllerTT(
 
         assertFalse(subscriptionRepository.existsById(subscriptionId))
         assertTrue(subscriptionRepository.findSatisfiedSubscriptionsByFilters("asdf123asdffasdf").isEmpty())
+    }
+
+    @Test
+    fun `subscriptions-get Must return subscriptions When subscriptions exists`() {
+        assertEquals(0, subscriptionRepository.count())
+
+        val createSubscriptionDto = randomCreateSubscriptionDto
+            .copy(
+                subscriptionType = SubscriptionType.TELEGRAM,
+                filters = setOf("asd", "fgh", "jkl"),
+            )
+
+        val subscriptionId = SubscriptionId(
+            userId = createSubscriptionDto.userId,
+            subscriptionType = createSubscriptionDto.subscriptionType,
+        )
+
+        mockMvc.post("/subscriptions/create") {
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(createSubscriptionDto)
+        }
+            .andDo { print() }
+            .andExpect { status { isOk() } }
+
+        val entity = subscriptionRepository.findByIdOrNull(subscriptionId)
+
+        assertNotNull(entity)
+
+        val expectedResponse = listOf(
+            SubscriptionDto(
+                createSubscriptionDto.userId,
+                createSubscriptionDto.subscriptionType,
+                createSubscriptionDto.filters,
+                entity?.createdAt!!,
+            )
+        )
+
+        mockMvc.get("/subscriptions/${createSubscriptionDto.userId}")
+            .andDo { print() }
+            .andExpect {
+                status { isOk() }
+                content { json(objectMapper.writeValueAsString(expectedResponse)) }
+            }
     }
 
     companion object {

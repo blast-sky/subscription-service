@@ -6,6 +6,6 @@ import java.io.Serializable
 
 @Embeddable
 data class SubscriptionId(
-    val id: String,
+    val userId: String,
     val subscriptionType: SubscriptionType,
 ) : Serializable

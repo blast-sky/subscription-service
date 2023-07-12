@@ -26,8 +26,8 @@ class FilterEntity(
 
     @ManyToOne
     @JoinColumns(
-        JoinColumn(name = "subscription_id", nullable = false),
-        JoinColumn(name = "subscription_type", nullable = false),
+        JoinColumn(name = "subscription_id", nullable = false, referencedColumnName = "user_id"),
+        JoinColumn(name = "subscription_type", nullable = false, referencedColumnName = "subscription_type"),
     )
     val subscription: SubscriptionEntity,
 ) : BaseEntity<Long?>()

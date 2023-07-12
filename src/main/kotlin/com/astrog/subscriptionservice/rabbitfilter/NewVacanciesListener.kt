@@ -25,7 +25,7 @@ class NewVacanciesListener(
         }.toSet()
 
         subscriptions.forEach { subscription ->
-            userInfoWithVacancyRabbitSender.send(subscription.id, subscription.subscriptionType, vacancy)
+            userInfoWithVacancyRabbitSender.send(subscription.userId, subscription.subscriptionType, vacancy)
         }
     }
 
