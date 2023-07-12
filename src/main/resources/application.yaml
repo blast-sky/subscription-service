@@ -9,8 +9,8 @@ spring:
     password: ${RABBIT_PASSWORD:guest}
     username: ${RABBIT_USERNAME:guest}
 
-
   jpa:
+    open-in-view: false
     show-sql: true
     hibernate:
       ddl-auto: none
@@ -22,6 +22,18 @@ spring:
     change-log: classpath:liquibase/changelog.xml
     enabled: true
 
+spring-doc:
+  swagger-ui:
+    operationsSorter: method
+  api-docs:
+    path: /api-docs/subscription-service
+
 logging:
   level:
     sql: trace
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
