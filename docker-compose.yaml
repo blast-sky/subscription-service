@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  subscription-service:
+    image: 'subscription-service:latest'
+    build:
+      context: .
+    container_name: subscription-service
+    depends_on:
+      - postgres
+      - rabbit
+    environment:
+      - BD_URL=jdbc:postgresql://postgres:5432/postgres
+      - BD_USERNAME=root
+      - BD_PASSWORD=root
+      - RABBIT_HOST=rabbit
+    ports:
+      - '8080:8080'
+
+  postgres:
+    image: 'postgres:15.3'
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+
+  rabbit:
+    image: 'rabbitmq:3-management'
+    container_name: rabbit
+    ports:
+      - '15672:15672'
+    volumes:
+      - type: bind
+        source: ./rabbit-settings/rabbitmq.config
+        target: /etc/rabbitmq/rabbitmq.config
+      - type: bind
+        source: ./rabbit-settings/rabbitmq-defs.json
+        target: /etc/rabbitmq/rabbitmq-defs.json
