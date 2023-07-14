@@ -30,6 +30,6 @@ class NewVacanciesListener(
     }
 
     companion object {
-        const val NEW_VACANCIES_QUEUE_NAME = "vacancies.new"
+        const val NEW_VACANCIES_QUEUE_NAME = "hhsva.service.vacancies.new"
     }
 }

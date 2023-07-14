@@ -1,26 +1,31 @@
 {
-  "vhosts":[
-    {"name": "/"}
+  "vhosts": [
+    {
+      "name": "/"
+    }
   ],
   "users": [
     {
       "name": "guest",
       "password": "guest",
-      "tags": ["administrator"]
+      "tags": [
+        "administrator"
+      ]
     }
   ],
-  "permissions":[
+  "permissions": [
     {
-      "user":"guest",
-      "vhost":"/",
-      "configure":".*",
-      "read":".*",
-      "write":".*"}
+      "user": "guest",
+      "vhost": "/",
+      "configure": ".*",
+      "read": ".*",
+      "write": ".*"
+    }
   ],
   "exchanges": [
     {
-      "name": "vacancy.announcer",
-      "vhost":"/",
+      "name": "hhsva.service",
+      "vhost": "/",
       "type": "direct",
       "durable": true,
       "auto_delete": false,
@@ -30,15 +35,15 @@
   ],
   "queues": [
     {
-      "name": "announcer.telegram",
-      "vhost":"/",
+      "name": "hhsva.service.announcer.telegram",
+      "vhost": "/",
       "durable": true,
       "auto_delete": false,
       "arguments": {}
     },
     {
-      "name": "vacancies.new",
-      "vhost":"/",
+      "name": "hhsva.service.vacancies.new",
+      "vhost": "/",
       "durable": true,
       "auto_delete": false,
       "arguments": {}
@@ -46,11 +51,11 @@
   ],
   "bindings": [
     {
-      "vhost":"/",
-      "source": "vacancy.announcer",
-      "destination": "announcer.telegram",
+      "vhost": "/",
+      "source": "hhsva.service",
+      "destination": "hhsva.service.announcer.telegram",
       "destination_type": "queue",
-      "routing_key": "telegram",
+      "routing_key": "announcer.telegram",
       "arguments": {}
     }
   ]

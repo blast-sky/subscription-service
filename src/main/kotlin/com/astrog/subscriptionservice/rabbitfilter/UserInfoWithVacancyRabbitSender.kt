@@ -22,13 +22,13 @@ class UserInfoWithVacancyRabbitSender(
 
     companion object {
 
-        const val VACANCY_ANNOUNCER_EXCHANGE_NAME = "vacancy.announcer"
+        const val VACANCY_ANNOUNCER_EXCHANGE_NAME = "hhsva.service"
 
         fun subscriptionTypeToRoutingKey(type: SubscriptionType): String {
             return when (type) {
-                SubscriptionType.TELEGRAM -> "telegram"
-                SubscriptionType.SMS -> "sms"
-                SubscriptionType.EMAIL -> "email"
+                SubscriptionType.TELEGRAM -> "announcer.telegram"
+                SubscriptionType.SMS -> "announcer.sms"
+                SubscriptionType.EMAIL -> "announcer.email"
             }
         }
     }

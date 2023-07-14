@@ -45,7 +45,7 @@ class RabbitListenerTestConfiguration {
         private const val NON_DURABLE = false
         private const val DO_NOT_AUTO_DELETE = false
 
-        const val TELEGRAM_ANNOUNCER_QUEUE_NAME = "announcer.telegram"
-        const val TELEGRAM_BINDING_KEY = "telegram"
+        const val TELEGRAM_ANNOUNCER_QUEUE_NAME = "hhsva.service.announcer.telegram"
+        const val TELEGRAM_BINDING_KEY = "announcer.telegram"
     }
 }
