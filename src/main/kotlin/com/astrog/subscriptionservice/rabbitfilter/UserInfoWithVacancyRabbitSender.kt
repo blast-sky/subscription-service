@@ -1,7 +1,6 @@
 package com.astrog.subscriptionservice.rabbitfilter
 
 import com.astrog.subscriptionservice.manager.model.domain.SubscriptionType
-import com.astrog.subscriptionservice.manager.model.entity.SubscriptionEntity
 import com.astrog.subscriptionservice.rabbitfilter.model.receive.Vacancy
 import com.astrog.subscriptionservice.rabbitfilter.model.response.UserInfoWithVacancy
 import org.springframework.amqp.rabbit.core.RabbitMessageOperations
