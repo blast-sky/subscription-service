@@ -22,7 +22,7 @@ jobs:
       - name: Grant permission to gradlew
         run: chmod +x gradlew
 
-      - name: Run tests
+      - name: Build jar
         uses: gradle/gradle-build-action@v2.4.2
         with:
           arguments: bootJar
